@@ -8,11 +8,27 @@ date: "2021-12-01"
 updated: "2022-01-13"
 ---
 
+import FileEditor from '../../../src/components/DevbookFileEditor';
+import RunnableCode from '../../../src/components/DevbookRunnableCode';
+import { Language } from '@devbookhq/ui';
+
+Replace `<your-dev-wallet-private-key>` with your **dev** private key. 
+`PRIVATE_KEY` and `PROVIDER_NETWORK` are used for initializing `sdk` in examples.
+
+<FileEditor 
+  language={Language.sh}
+  filepath="/.env"
+>
+{'PRIVATE_KEY=<your-dev-wallet-private-key>\nPROVIDER_NETWORK="https://rinkeby-light.eth.linkpool.io/"'}
+</FileEditor>
+
+
 ### Mint an NFT
 
-```ts
-const nftCollection = sdk.getNFTModule("<MODULE_ADDRESS>");
-
+<RunnableCode
+  language={Language.ts}
+>
+{`const nftCollection = sdk.getNFTModule("<MODULE_ADDRESS>");\n
 const mintNft = async () => {
   try {
     await nftCollection.mint({
@@ -24,18 +40,19 @@ const mintNft = async () => {
   } catch (err) {
     console.log(err);
   }
-};
+};\n
+mintNft();`}
+</RunnableCode>
 
-mintNft();
-```
 
 ### Mint an NFT for another wallet
 
 Replace `<TARGET_ADDRESS>` with the target address.
 
-```ts
-const nftCollection = sdk.getNFTModule("<MODULE_ADDRESS>");
-
+<RunnableCode
+  language={Language.ts}
+>
+{`const nftCollection = sdk.getNFTModule("<MODULE_ADDRESS>");\n
 const mintNftTo = async (address: string) => {
   try {
     await nftCollection.mintTo(address, {
@@ -47,27 +64,27 @@ const mintNftTo = async (address: string) => {
   } catch (err) {
     console.log(err);
   }
-};
-
-mintNftTo("<TARGET_ADDRESS>");
-```
+};\n
+mintNftTo("<TARGET_ADDRESS>");`}
+</RunnableCode>
 
 ### Get the balance for the current account
 
-```ts
-// The NFT module address received after initializing the NFT module on the dashboard.
-const nftCollectionAddress = "<MODULE_ADDRESS>";
-
+<RunnableCode
+  language={Language.ts}
+>
+{`// The NFT module address received after initializing the NFT module on the dashboard.
+const nftCollectionAddress = "<MODULE_ADDRESS>";\n
 // Initialize the NFT drop module with the contract address.
-const nftCollection = sdk.getNFTModule(nftCollectionAddress);
-
+const nftCollection = sdk.getNFTModule(nftCollectionAddress);\n
 const balance = async () => {
   await nftCollection
     .balance()
     .then((data) => console.log(data.toNumber()))
     .catch((err) => console.log(err));
-};
-```
+};\n
+balance();`}
+</RunnableCode>
 
 ### Get the balance for a different account
 
