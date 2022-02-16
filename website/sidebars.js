@@ -22,7 +22,7 @@ const sidebars = {
       items: [
         {
           type: 'doc',
-          id: 'code-examples/nft-collection/nft-collection',
+          id: 'code-examples/token/token',
         },
       ],
     },

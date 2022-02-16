@@ -13,7 +13,7 @@ function HomepageHeader() {
         <div className={styles.buttons}>
           <Link
             className="button button--secondary button--lg"
-            to="/docs/code-examples/nft-collection">
+            to="/docs/code-examples/token">
             Demo
           </Link>
         </div>

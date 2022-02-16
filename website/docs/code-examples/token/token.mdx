@@ -10,22 +10,73 @@ updated: "2022-02-01"
 
 ## TokenModule Code Examples
 
-Don’t forget to replace anything between `'<>'` with your own values. 
+import FileEditor from '../../../src/components/DevbookFileEditor';
+import RunnableCode from '../../../src/components/DevbookRunnableCode';
+import { Language } from '@devbookhq/ui';
 
-Initialize the token module:
+Replace `<your-dev-wallet-private-key>` with your **dev** private key 
+and `<token-module-address>` with the address of a token module you created with thirdweb.
 
-```tsx
-// Set variable for the token module address which can be found after creating a token module in the dashboard
-const tokenAddress = "<TOKEN_MODULE_ADDRESS>";
+<FileEditor 
+  language={Language.sh}
+  filepath="/.env"
+>
+{`PRIVATE_KEY=<your-dev-wallet-private-key>
+PROVIDER_NETWORK="https://rinkeby-light.eth.linkpool.io/"
+TOKEN_MODULE_ADDRESS=<token-module-address>`}
+</FileEditor>
 
-// Initialize the token module with the module address
-const token = sdk.getTokenModule(tokenAddress);
-```
+### Mint token
+
+<RunnableCode
+  language={Language.js}
+>
+{`const provider = new ethers.Wallet(
+  process.env.PRIVATE_KEY,
+  ethers.getDefaultProvider(process.env.PROVIDER_NETWORK),
+)
+const sdk = new ThirdwebSDK(provider)
+const token = sdk.getTokenModule(process.env.TOKEN_MODULE_ADDRESS)\n
+async function mintToken(amount) {
+  try {
+    await token.mint(ethers.utils.parseUnits(amount, 18))
+    console.log(\`Minted "\${amount}" tokens\`)
+  } catch (error) {
+    console.error('Failed to mint token. Error:', error)
+  }
+}\n
+mintToken('<AMOUNT_TO_MINT>')`}
+</RunnableCode>
+
+### Get balance
+
+<RunnableCode
+  language={Language.js}
+>
+{`const provider = new ethers.Wallet(
+  process.env.PRIVATE_KEY,
+  ethers.getDefaultProvider(process.env.PROVIDER_NETWORK),
+)
+const sdk = new ThirdwebSDK(provider)
+const token = sdk.getTokenModule(process.env.TOKEN_MODULE_ADDRESS)\n
+async function getBalance() {
+  try {
+    const balance = await token.balance()
+    console.log(balance)
+  } catch (error) {
+    console.error('Failed to check balance. Error:', error)
+  }
+}\n
+getBalance()`}
+</RunnableCode>
+
 
 ### allowance
 
-```tsx
-const allowance = async (spender) => { 
+<RunnableCode
+  language={Language.ts}
+>
+{`const allowance = async (spender) => { 
   try {
     await token.allowance(spender);
   } catch (error) {
@@ -33,22 +84,23 @@ const allowance = async (spender) => {
   }
 };
 // get the allowance for specified address
-allowance("<SPENDER_ADDRESS>");
-```
+allowance("<SPENDER_ADDRESS>");`}
+</RunnableCode>
 
 ### allowanceOf
 
-```tsx
-const allowanceOf = async (owner, spender) => {
+<RunnableCode
+  language={Language.ts}
+>
+{`const allowanceOf = async (owner, spender) => {
   try {
     await token.allowanceOf(owner, spender);
   } catch (error) {
     console.log('Failed to check allowance of. Error: ', error);
   }
-};
-
-allowanceOf("<OWNER_ADDRESS>", "<SPENDER_ADDRESS>");
-```
+};\n
+allowanceOf("<OWNER_ADDRESS>", "<SPENDER_ADDRESS>");`}
+</RunnableCode>
 
 ### balance
 

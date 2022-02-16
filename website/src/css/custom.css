@@ -61,5 +61,5 @@ html[data-theme='dark'] .docusaurus-highlight-code-line {
 .spin-wrapper {
   display: flex;
   align-items: center;
-  margin: auto 4px;
+  margin: auto 6px;
 }

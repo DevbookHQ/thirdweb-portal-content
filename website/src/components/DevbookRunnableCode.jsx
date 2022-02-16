@@ -21,16 +21,9 @@ export { Language } from '@devbookhq/ui'
 const libImport = `
 import { ThirdwebSDK } from "@3rdweb/sdk";
 import { ethers } from "ethers";
-import { dotenv } from "dotenv";
+import dotenv from "dotenv";
 
 dotenv.config();
-
-const sdk = new ThirdwebSDK(
-  new ethers.Wallet(
-    process.env.PRIVATE_KEY as string,
-    ethers.getDefaultProvider(process.env.PROVIDER_NETWORK as string),
-  )
-);
 
 `
 
@@ -54,10 +47,8 @@ function DevbookRunnableCode({
     if (status !== DevbookStatus.Connected) return
     setIsLoading(true)
     runCode(libImport + code)
-    // runCmd(code)
   }, [
     code,
-    // runCmd,
     runCode,
     status,
   ])
@@ -82,7 +73,7 @@ function DevbookRunnableCode({
           <Output
             stdout={stdout}
             stderr={stderr}
-            height={250}
+            height={200}
           />
         </div>
       )}
