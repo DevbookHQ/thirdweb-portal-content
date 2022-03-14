@@ -14,6 +14,7 @@ import {
   Editor,
   Spinner,
   Output,
+  Terminal
 } from '@devbookhq/ui'
 
 export { Language } from '@devbookhq/ui'
@@ -26,6 +27,12 @@ import dotenv from "dotenv";
 dotenv.config();
 
 `
+const packagejson = `{
+  "name": "thirdweb",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "index.js"
+}`
 
 const MemoizedEditor = memo(Editor)
 
@@ -33,7 +40,7 @@ function DevbookRunnableCode({
   language,
   children: initialCode,
 }) {
-  const { stdout, stderr, status, runCode, runCmd } = useDevbook({ debug: true, env: Env.ThirdwebNode })
+  const { stdout, stderr, status, runCmd, fs } = useDevbook({ debug: true, env: 'dbk-dev-env', config: { domain: 'dev.usedevbook.com' } })
   const [code, setCode] = useState(initialCode)
   const [isLoading, setIsLoading] = useState(false)
 
@@ -46,11 +53,19 @@ function DevbookRunnableCode({
   const run = useCallback(() => {
     if (status !== DevbookStatus.Connected) return
     setIsLoading(true)
-    runCode(libImport + code)
+    const finalCode = libImport + code
+    fs.write('/package.json', packagejson).then(() => {
+      fs.write('/index.js', finalCode).then(() => {
+        console.log('DONE!!!!!!!')
+        runCmd('node /index.js')
+      })
+    })
   }, [
-    code,
-    runCode,
     status,
+    setIsLoading,
+    code,
+    runCmd,
+    fs,
   ])
 
   return (
@@ -59,7 +74,7 @@ function DevbookRunnableCode({
         <button className="run-btn" onClick={run}>Run</button>
         {isLoading &&
           <div className="spin-wrapper">
-            <Spinner />
+           <Spinner />
           </div>
         }
       </div>

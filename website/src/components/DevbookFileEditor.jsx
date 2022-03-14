@@ -19,7 +19,7 @@ function DevbookFileEditor({
   filepath,
   children: initialContent,
 }) {
-  const { fs, status } = useDevbook({ debug: true, env: Env.ThirdwebNode })
+  const { fs, status } = useDevbook({ debug: true, env: 'dbk-dev-env', config: { domain: 'dev.usedevbook.com' } })
 
   const updateContent = useCallback(async content => {
     if (!fs) return

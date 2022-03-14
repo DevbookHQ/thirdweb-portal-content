@@ -11,13 +11,18 @@ updated: "2022-02-01"
 ## TokenModule Code Examples
 
 import FileEditor from '../../../src/components/DevbookFileEditor';
+import Terminal from '../../../src/components/DevbookTerminal';
 import RunnableCode from '../../../src/components/DevbookRunnableCode';
 import { Language } from '@devbookhq/ui';
 
-Replace `<your-dev-wallet-private-key>` with your **dev** private key 
+<Terminal/>
+
+---
+
+Replace `<your-dev-wallet-private-key>` with your **dev** private key
 and `<token-module-address>` with the address of a token module you created with thirdweb.
 
-<FileEditor 
+<FileEditor
   language={Language.sh}
   filepath="/.env"
 >
@@ -76,7 +81,7 @@ getBalance()`}
 <RunnableCode
   language={Language.ts}
 >
-{`const allowance = async (spender) => { 
+{`const allowance = async (spender) => {
   try {
     await token.allowance(spender);
   } catch (error) {
@@ -138,7 +143,7 @@ const burn = async (amount) => {
     await token.burn(ethers.utils.parseEther(amount));
   } catch (error) {
     console.log('Failed to burn. Error: ', error);
-  } 
+  }
 };
 // burn 1 from the supply from the owner
 burn('<AMOUNT_TO_BURN>');
@@ -168,7 +173,7 @@ const get = async () => {
     console.log('Failed to get. Error: ', error);
   }
 };
-// get details about the token module 
+// get details about the token module
 get();
 ```
 
@@ -177,19 +182,19 @@ get();
 ```tsx
 const getAllHolderBalances = async () => {
   try {
-    await token.getAllHolderBalances();  
+    await token.getAllHolderBalances();
   } catch (error) {
     console.log('Failed to get all holder balances. Error: ', error);
   }
 };
-  
+
 getAllHolderBalances();
 ```
 
 ### getDelegation
 
 ```tsx
-const getDelegation = async () => {  
+const getDelegation = async () => {
   try {
     await token.getDelegation();
   } catch (error) {
@@ -203,14 +208,14 @@ getDelegation();
 ### getDelegationOf
 
 ```tsx
-const getDelegationOf = async (account) => {  
+const getDelegationOf = async (account) => {
   try {
     await token.getDelegationOf(account);
   } catch (error) {
     console.log('Failed to get delegation of. Error: ', error);
   }
   };
-  
+
 getDelegationOf("<SPENDER_ADDRESS>");
 ```
 
@@ -245,7 +250,7 @@ getVoteBalance();
 ### getVoteBalanceOf
 
 ```tsx
-const getVoteBalanceOf = async (account) => {  
+const getVoteBalanceOf = async (account) => {
   try {
     await token.getVoteBalanceOf(account);
   } catch (error) {
@@ -259,22 +264,22 @@ getVoteBalanceOf("<SPENDER_ADDRESS>");
 ### isTransferRestricted
 
 ```tsx
-const isTransferRestricted = async () => {  
+const isTransferRestricted = async () => {
   try {
     await token.isTransferRestricted();
   } catch (error) {
     console.log('Failed to check is transfer restricted. Error: ', error);
   }
 };
-// get information about the transfer settings in the token module 
+// get information about the transfer settings in the token module
 isTransferRestricted();
 ```
 
 ### mint
 
 ```tsx
-const mint = async (amount) => { 
-  try { 
+const mint = async (amount) => {
+  try {
     await token.mint(ethers.utils.parseEther(amount));
   } catch (error) {
     console.log('Failed to mint. Error: ', error);
@@ -287,8 +292,8 @@ mint('<AMOUNT_TO_MINT>');
 ### mintBatchTo
 
 ```tsx
-const mintBatchTo = async (batchTo) => { 
-  try { 
+const mintBatchTo = async (batchTo) => {
+  try {
     await token.mintBatchTo(batchTo);
   } catch (error) {
     console.log('Failed to mint batch to. Error: ', error);
@@ -313,8 +318,8 @@ mintBatchTo(example);
 ### mintTo
 
 ```tsx
-const mintTo = async (to, amount) => {  
-  try { 
+const mintTo = async (to, amount) => {
+  try {
     await token.mintTo(to, amount);
   } catch (error) {
     console.log('Failed to mint to. Error: ', error);
@@ -327,7 +332,7 @@ mintTo("<SPENDER_ADDRESS>", ethers.utils.parseEther("1"));
 ### setAllowance
 
 ```tsx
-const setAllowance = async (spender, amount) => {  
+const setAllowance = async (spender, amount) => {
   try {
     await token.setAllowance(spender, ethers.utils.parseEther(amount));
   } catch (error) {
@@ -342,7 +347,7 @@ setAllowance("<SPENDER_ADDRESS>", '<AMOUNT_TO_ALLOW>');
 
 ```tsx
 const setModuleMetadata = async (metadata) => {
-  try {  
+  try {
     await token.setModuleMetadata(metadata);
   } catch (error) {
     console.log('Failed to set module metadata. Error: ', error);
@@ -356,21 +361,21 @@ setModuleMetadata("<METADATA_URI_OR_OBJECT>");
 ### setRestrictedTransfer
 
 ```tsx
-const setRestrictedTransfer = async (restricted) => { 
-  try { 
+const setRestrictedTransfer = async (restricted) => {
+  try {
     await token.setRestrictedTransfer(restricted);
   } catch (error) {
     console.log('Failed to set restricted transfer. Error: ', error);
   }
 };
-// set true/false for the transfer settings for the token module 
+// set true/false for the transfer settings for the token module
 setRestrictedTransfer('<IS_RESTRICTED_TRANSFER>');
 ```
 
 ### totalSupply
 
 ```tsx
-const totalSupply = async () => {  
+const totalSupply = async () => {
   try {
     await token.totalSupply();
   } catch (error) {
@@ -384,21 +389,21 @@ totalSupply();
 ### transfer
 
 ```tsx
-const transfer = async (to, amount) => {  
+const transfer = async (to, amount) => {
   try {
     await token.transfer(to, ethers.utils.parseEther(amount));
   } catch (error) {
     console.log('Failed to transfer. Error: ', error);
   }
 };
-// transfer a specified amount to a specific address  
+// transfer a specified amount to a specific address
 transfer("<SPENDER_ADDRESS>", '<AMOUNT_TO_TRANSFER>');
 ```
 
 ### transferBatch
 
 ```tsx
-const transferBatch = async (batch) => {  
+const transferBatch = async (batch) => {
   try {
     await token.transferBatch(batch);
   } catch (error) {
@@ -417,28 +422,28 @@ const example = [
   }
 ]
 
-// transfer different amounts to different addresses with one call  
+// transfer different amounts to different addresses with one call
 transferBatch(example);
 ```
 
 ### transferFrom
 
 ```tsx
-const transferFrom = async (from, to, amount) => { 
-  try { 
+const transferFrom = async (from, to, amount) => {
+  try {
     await token.transferFrom(from, to, ethers.utils.parseEther(amount));
   } catch (error) {
     console.log('Failed to transfer from. Error: ', error);
   }
 };
-// transfer a specified amount from a specific address to another  
+// transfer a specified amount from a specific address to another
 transferFrom("<SPENDER_ADDRESS>", "<SPENDER_ADDRESS_2>", '<AMOUNT_TO_TRANSFER>');
 ```
 
 ### transferFromBatch
 
 ```tsx
-const transferFromBatch = async (batch) => {  
+const transferFromBatch = async (batch) => {
   try {
     await token.transferFromBatch(batch);
   } catch (error) {
@@ -459,8 +464,8 @@ const example = [
   }
 ]
 
-// transfer different amounts FROM different addresses  
-// TO different addresses with one call  
+// transfer different amounts FROM different addresses
+// TO different addresses with one call
 transferFromBatch(example);
 ```
 
