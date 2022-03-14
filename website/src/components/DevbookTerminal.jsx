@@ -4,22 +4,37 @@ import React, {
 } from 'react'
 
 import {
+  Devbook,
+  DevbookStatus,
   useDevbook,
 } from '@devbookhq/sdk'
 import {
   Terminal,
-  TerminalHandler,
 } from '@devbookhq/ui'
+
+const packageJSON = `{
+  "name": "thirdweb",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "index.js"
+}`
 
 function DevbookTerminal() {
   const devbook = useDevbook({ debug: true, env: 'dbk-dev-env', config: { domain: 'dev.usedevbook.com' } })
-  const terminalRef = useRef<TerminalHandler>(null)
+  const terminalRef = useRef(null)
 
-  const install = useCallback(() => {
+  async function install() {
+    console.log('pre install')
     if (!terminalRef.current) return
+    if (!devbook.fs) return
+    if (devbook.status !== DevbookStatus.Connected) return
+
+    console.log('executing')
+    await devbook.fs.write('/package.json', packageJSON)
+
     terminalRef.current.handleInput('npm i @3rdweb/sdk\n')
     terminalRef.current.focus()
-  }, [terminalRef])
+  }
 
   return (
     <div className="dbk-editor-wrapper">
@@ -27,6 +42,7 @@ function DevbookTerminal() {
         <button className="run-btn" onClick={install}>Install</button>
       </div>
       <Terminal
+        title=""
         ref={terminalRef}
         lightTheme={false}
         devbook={devbook}

@@ -27,12 +27,6 @@ import dotenv from "dotenv";
 dotenv.config();
 
 `
-const packagejson = `{
-  "name": "thirdweb",
-  "version": "1.0.0",
-  "type": "module",
-  "main": "index.js"
-}`
 
 const MemoizedEditor = memo(Editor)
 
@@ -50,23 +44,14 @@ function DevbookRunnableCode({
     }
   }, [stdout, stderr])
 
-  const run = useCallback(() => {
+  async function run() {
     if (status !== DevbookStatus.Connected) return
     setIsLoading(true)
     const finalCode = libImport + code
-    fs.write('/package.json', packagejson).then(() => {
-      fs.write('/index.js', finalCode).then(() => {
-        console.log('DONE!!!!!!!')
-        runCmd('node /index.js')
-      })
-    })
-  }, [
-    status,
-    setIsLoading,
-    code,
-    runCmd,
-    fs,
-  ])
+
+    await fs.write('/index.js', finalCode)
+    runCmd('node /index.js')
+  }
 
   return (
     <div className="dbk-editor-wrapper">
@@ -74,7 +59,7 @@ function DevbookRunnableCode({
         <button className="run-btn" onClick={run}>Run</button>
         {isLoading &&
           <div className="spin-wrapper">
-           <Spinner />
+            <Spinner />
           </div>
         }
       </div>
