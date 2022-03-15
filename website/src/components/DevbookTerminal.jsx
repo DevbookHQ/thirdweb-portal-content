@@ -24,22 +24,20 @@ function DevbookTerminal() {
   const terminalRef = useRef(null)
 
   async function install() {
-    console.log('pre install')
     if (!terminalRef.current) return
     if (!devbook.fs) return
     if (devbook.status !== DevbookStatus.Connected) return
 
-    console.log('executing')
     await devbook.fs.write('/package.json', packageJSON)
 
-    terminalRef.current.handleInput('npm i @3rdweb/sdk\n')
+    terminalRef.current.handleInput('npm i @3rdweb/sdk ethers dotenv')
     terminalRef.current.focus()
   }
 
   return (
     <div className="dbk-editor-wrapper">
       <div className="control-wrapper">
-        <button className="run-btn" onClick={install}>Install</button>
+        <button className="run-btn" onClick={install}>Install ThirdWeb SDK</button>
       </div>
       <Terminal
         title=""
